@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>開發svg動畫的好套件：Vivus - Let's Write</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <style>
+    .svg {
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 400px;
+    }
+    .svg svg {
+      width: 100%;
+      height: 100%;
+    }
+    svg, path {
+      transition: fill .4s ease;
+    }
+    .svg svg:not(#fox):not(#giraffe) {
+      fill: white;
+      stroke: black;
+    }
+    .fill svg:not(#fox):not(#giraffe) {
+      fill: black;
+    }
+    #fox, #giraffe {
+      stroke-width: 1
+    }
+    #append-fox:not(.fill) #fox path,
+    #append-giraffe:not(.fill) #giraffe path {
+      fill: #FFF;
+    }
+    .twelve {
+      margin-bottom: 5vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="twelve columns full-height">
+      <h1>Vivus svg 動畫</h1>
+    </div>
+
+    <!-- kangaroo -->
+    <div class="twelve columns">
+      <h2>kangaroo</h2>
+      <div id="append-kangaroo" class="svg"></div>
+    </div>
+
+    <!-- pet -->
+    <div class="twelve columns">
+      <h2>pet</h2>
+      <div id="append-pet" class="svg"></div>
+    </div>
+
+    <!-- stag -->
+    <div class="twelve columns">
+      <h2>stag</h2>
+      <div id="append-stag" class="svg"></div>
+    </div>
+
+    <!-- whale -->
+    <div class="twelve columns">
+      <h2>whale</h2>
+      <div id="append-whale" class="svg"></div>
+    </div>
+
+    <!-- fox -->
+    <div class="twelve columns">
+      <h2>fox</h2>
+      <div id="append-fox" class="svg"></div>
+    </div>
+
+    <!-- giraffe -->
+    <div class="twelve columns">
+      <h2>giraffe</h2>
+      <div id="append-giraffe" class="svg"></div>
+    </div>
+
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vivus@0.4.4/dist/vivus.min.js"></script>
+  <script>
+    function getSVG(svg, el, id) {
+      fetch(svg)
+        .then(res => res.text())
+        .then(res => document.getElementById(el).insertAdjacentHTML('afterbegin', res))
+        .then(() => viv(id));
+    }
+    const animals = ['kangaroo', 'pet', 'stag', 'whale', 'fox', 'giraffe'];
+    Array.prototype.forEach.call(animals, a => {
+      getSVG(`img/${a}.svg`, `append-${a}`, a);
+    });
+
+    function viv(svg) {
+      if(svg === 'kangaroo') {
+        const Kangaroo = new Vivus('kangaroo', {
+          type: 'delayed',
+          duration: 200,
+          pathTimingFunction: Vivus.LINEAR
+        }, kangarooCallback);
+        function kangarooCallback() {
+          document.getElementById('append-kangaroo').classList.add('fill');
+        }
+      }
+      else if(svg === 'pet') {
+        const Pet = new Vivus('pet', {
+          type: 'sync',
+          duration: 200,
+          pathTimingFunction: Vivus.EASE
+        }, petCallback);
+        function petCallback() {
+          document.getElementById('append-pet').classList.add('fill');
+        }
+      }
+      else if(svg === 'stag') {
+        const Stag = new Vivus('stag', {
+          type: 'oneByOne',
+          duration: 200,
+          pathTimingFunction: Vivus.EASE_IN
+        }, stagCallback);
+        function stagCallback() {
+          document.getElementById('append-stag').classList.add('fill');
+        }
+      }
+      else if(svg === 'whale') {
+        const Whale = new Vivus('whale', {
+          type: 'sync',
+          duration: 200,
+          pathTimingFunction: Vivus.EASE_OUT
+        }, whaleCallback);
+        function whaleCallback() {
+          document.getElementById('append-whale').classList.add('fill');
+        }
+      }
+      else if(svg === 'fox') {
+        const Fox = new Vivus('fox', {
+          type: 'delayed',
+          duration: 200,
+          pathTimingFunction: Vivus.EASE
+        }, foxCallback);
+        function foxCallback() {
+          document.getElementById('append-fox').classList.add('fill');
+        }
+      }
+      else if(svg === 'giraffe') {
+        const Giraffe = new Vivus('giraffe', {
+          type: 'oneByOne',
+          duration: 400,
+          pathTimingFunction: Vivus.EASE
+        }, giraffeCallback);
+        function giraffeCallback() {
+          document.getElementById('append-giraffe').classList.add('fill');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
