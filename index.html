@@ -25,6 +25,7 @@
     .svg svg {
       width: 100%;
       height: 100%;
+      stroke-width: 1;
     }
     svg, path {
       transition: fill .4s ease;
@@ -35,9 +36,6 @@
     }
     .fill svg:not(#fox):not(#giraffe) {
       fill: #008BBF;
-    }
-    #fox, #giraffe, #snow {
-      stroke-width: 1;
     }
     #append-fox:not(.fill) #fox path,
     #append-giraffe:not(.fill) #giraffe path {
@@ -62,6 +60,10 @@
   <div class="container">
     <div class="twelve columns full-height">
       <h1>Vivus svg Demo</h1>
+      <h6>
+        使用教學文：
+        <a href="https://letswrite.tw/vivus-svg/" target="_blank">如何使用vivus.js製作輕量快速svg動畫</a>
+      </h6>
     </div>
 
     <!-- snow -->
@@ -105,9 +107,9 @@
   <script src="https://cdn.jsdelivr.net/npm/vivus@0.4.4/dist/vivus.min.js"></script>
   <script>
     new Vivus('append-snow', {
-      duration: 200,
-      type: 'oneByOne',
-      pathTimingFunction: Vivus.EASE_IN,
+      duration: 400,
+      type: 'delayed',
+      pathTimingFunction: Vivus.EASE,
       file: 'img/snow.svg?v=2'
       }, snowCallback);
     function snowCallback() {
@@ -117,7 +119,7 @@
     new Vivus('append-tree', {
       duration: 200,
       type: 'delayed',
-      pathTimingFunction: Vivus.EASE_IN,
+      pathTimingFunction: Vivus.EASE,
       file: 'img/tree.svg'
       }, treeCallback);
     function treeCallback() {
@@ -125,7 +127,7 @@
     }
 
     new Vivus('append-stag', {
-      duration: 200,
+      duration: 500,
       type: 'oneByOne',
       pathTimingFunction: Vivus.EASE_IN,
       file: 'img/stag.svg'
@@ -147,7 +149,7 @@
     new Vivus('append-fox', {
       duration: 150,
       type: 'delayed',
-      pathTimingFunction: Vivus.EASE,
+      pathTimingFunction: Vivus.EASE_OUT_BOUNCE,
       file: 'img/fox.svg'
       }, foxCallback);
     function foxCallback() {
@@ -157,27 +159,12 @@
     new Vivus('append-giraffe', {
       duration: 150,
       type: 'oneByOne',
-      pathTimingFunction: Vivus.EASE,
+      pathTimingFunction: Vivus.EASE_OUT,
       file: 'img/giraffe.svg'
       }, giraffeCallback);
     function giraffeCallback() {
       document.getElementById('append-giraffe').classList.add('fill');
     }
   </script>
-  <!-- <script>
-
-    function viv(svg) {
-      else if(svg === 'giraffe') {
-        const Giraffe = new Vivus('giraffe', {
-          type: 'oneByOne',
-          duration: 400,
-          pathTimingFunction: Vivus.EASE
-        }, giraffeCallback);
-        function giraffeCallback() {
-          document.getElementById('append-giraffe').classList.add('fill');
-        }
-      }
-    }
-  </script> -->
 </body>
 </html>
